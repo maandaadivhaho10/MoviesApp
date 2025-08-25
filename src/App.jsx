@@ -14,8 +14,10 @@ const VidJoyApp = () => {
   const [netflixSeries, setNetflixSeries] = useState([]);
   const [netflixMovies, setNetflixMovies] = useState([]);
   const [actionMovies, setActionMovies] = useState([]);
+   const [horrorMovies, setHorrorMovies] = useState([]);
   const [filteredContent, setFilteredContent] = useState([]);
- 
+const [adventureMovies, setAdventureMovies] = useState([]);
+const [romanceMovies, setRomanceMovies] = useState([]);
   
   // Fetch Featured Movies
   useEffect(() => {
@@ -36,6 +38,8 @@ const VidJoyApp = () => {
     }
     fetchAction();
   }, []);
+
+
    useEffect(() => {
     // Apple TV+ series (network_id = 2552)
     async function fetchAppleTV() {
@@ -72,11 +76,39 @@ const VidJoyApp = () => {
       const data = await res.json();
       setActionMovies(data.results);
     }
+      // Action movies (genre_id = 28)
+    async function fetchHorrorMovies() {
+      const res = await fetch(
+        `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=27&language=en-US&page=1`
+      );
+      const data = await res.json();
+     setHorrorMovies(data.results);
+    }
+    // Adventure movies (genre_id = 12)
+async function fetchAdventureMovies() {
+  const res = await fetch(
+    `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=12&language=en-US&page=1`
+  );
+  const data = await res.json();
+  setAdventureMovies(data.results);
+}
+
+// Romance movies (genre_id = 10749)
+async function fetchRomanceMovies() {
+  const res = await fetch(
+    `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=10749&language=en-US&page=1`
+  );
+  const data = await res.json();
+  setRomanceMovies(data.results);
+}
 
     fetchAppleTV();
     fetchNetflixSeries();
     fetchNetflixMovies();
     fetchActionMovies();
+    fetchHorrorMovies();
+    fetchRomanceMovies();
+    fetchAdventureMovies();
   }, []);
 
   // Search functionality
@@ -178,54 +210,50 @@ const HeroSection = () => {
   const currentContent = featuredContent[currentSlide];
 
   return (
-    <div className="relative h-screen">
-      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent z-10"></div>
-      <img
-        src={`https://image.tmdb.org/t/p/original${currentContent.backdrop_path}`}
-        alt={currentContent.title}
-        className="w-full h-full object-cover transition-opacity duration-1000"
-      />
-      <div className="absolute bottom-32 left-8 z-20 max-w-xl">
-        <h1 className="text-6xl text-white font-bold mb-4">{currentContent.title}</h1>
-        <div className="flex items-center space-x-4 mb-4">
-          <span className="bg-white text-black px-3 py-1 rounded text-sm font-semibold">
-            MOVIE
-          </span>
-          <span className="font-semibold text-gray-300">•</span>
-          <span className="text-white">
-            {currentContent.release_date?.split("-")[0]}
-          </span>
-          <span className="font-semibold text-gray-300">•</span>
-          <div className="flex items-center">
-            <span className="text-white mr-1">★</span>
-            <span className="text-white">{currentContent.vote_average.toFixed(1)}</span>
-          </div>
-        </div>
-        <p className="text-gray-300 mb-6 leading-relaxed">{currentContent.overview}</p>
-        <div className="flex items-center space-x-4">
-          <button className="flex items-center space-x-2 bg-white text-black px-6 py-3 rounded-full hover:bg-gray-200 transition-colors">
-            <Play className="w-5 h-5" />
-            <span className="font-semibold">Watch</span>
-          </button>
-          <button className="flex items-center justify-center w-12 h-12 border-2 border-white rounded-full hover:bg-gray-700 hover:text-black transition-colors">
-            <Plus className="w-6 h-6 text-white" />
-          </button>
-        </div>
-      </div>
-      <div className="absolute bottom-8 right-8 flex space-x-2 z-20">
-        {featuredContent.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className={`w-2 h-2 rounded-full transition-colors duration-300 ${
-              index === currentSlide
-                ? "bg-white"
-                : "bg-gray-600 hover:bg-gray-400"
-            }`}
-          />
-        ))}
+    <div className="relative h-[70vh]">
+  <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent z-10"></div>
+  <img
+    src={`https://image.tmdb.org/t/p/original${currentContent.backdrop_path}`}
+    alt={currentContent.title}
+    className="w-full h-full object-cover transition-opacity duration-1000"
+  />
+  <div className="absolute bottom-20 left-6 z-20 max-w-lg">
+    <h1 className="text-4xl text-white font-bold mb-2">{currentContent.title}</h1>
+    <div className="flex items-center space-x-2 mb-2 text-sm text-gray-300">
+      <span className="bg-white text-black px-2 py-0.5 rounded font-semibold">MOVIE</span>
+      <span>•</span>
+      <span>{currentContent.release_date?.split("-")[0]}</span>
+      <span>•</span>
+      <div className="flex items-center">
+        <span className="text-white mr-1">★</span>
+        <span className="text-white">{currentContent.vote_average.toFixed(1)}</span>
       </div>
     </div>
+    <p className="text-gray-300 mb-4 leading-relaxed">{currentContent.overview}</p>
+    <div className="flex items-center space-x-3">
+      <button className="flex items-center space-x-2 bg-white text-black px-4 py-2 rounded-full hover:bg-gray-200 transition-colors">
+        <Play className="w-5 h-5" />
+        <span className="font-semibold">Watch</span>
+      </button>
+      <button className="flex items-center justify-center w-10 h-10 border-2 border-white rounded-full hover:bg-gray-700 hover:text-black transition-colors">
+        <Plus className="w-5 h-5 text-white" />
+      </button>
+    </div>
+  </div>
+  <div className="absolute bottom-4 right-6 flex space-x-2 z-20">
+    {featuredContent.map((_, index) => (
+      <button
+        key={index}
+        onClick={() => setCurrentSlide(index)}
+        className={`w-2 h-2 rounded-full transition-colors duration-300 ${
+          index === currentSlide
+            ? "bg-white"
+            : "bg-gray-600 hover:bg-gray-400"
+        }`}
+      />
+    ))}
+  </div>
+</div>
   );
 };
 
@@ -320,44 +348,59 @@ const ContentRow = ({ title, items, showExplore = true, isLarge = false }) => {
   );
 };
 
-  const SearchResults = () => (
-    <div className="pt-32 bg-black min-h-screen px-8">
-      <h2 className="text-2xl font-semibold text-white mb-6">Search Results for "{searchQuery}"</h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        {filteredContent.map((item, index) => (
+const SearchResults = () => (
+  <div className="pt-32 bg-black min-h-screen px-8">
+    <h2 className="text-2xl font-semibold text-white mb-6">
+      Search Results for "{searchQuery}"
+    </h2>
+    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+      {filteredContent.map((item, index) => {
+        const image = item.poster_path
+          ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+          : "https://via.placeholder.com/500x750?text=No+Image";
+        const name = item.title || item.name;
+        const year = (item.release_date || item.first_air_date || "").split("-")[0];
+        const rating = item.vote_average?.toFixed(1);
+
+        return (
           <div key={index} className="group cursor-pointer">
             <div className="relative overflow-hidden rounded-lg">
-              <img 
-                src={item.image} 
-                alt={item.title}
+              <img
+                src={image}
+                alt={name}
                 className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-3">
-                <h3 className="font-semibold text-white text-sm mb-1">{item.title}</h3>
+                <h3 className="font-semibold text-white text-sm mb-1">{name}</h3>
                 <div className="flex items-center space-x-2 text-xs text-gray-300">
-                  <span>{item.year}</span>
+                  <span>{year || "N/A"}</span>
                   <span>•</span>
                   <div className="flex items-center">
                     <span className="text-yellow-500 mr-1">★</span>
-                    <span>{item.rating}</span>
+                    <span>{rating || "N/A"}</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        ))}
-      </div>
+        );
+      })}
     </div>
-  );
+  </div>
+);
+
 
   const HomeView = () => (
     <div className="pt-20">
       <HeroSection />
       <div className="bg-black py-12">
-        <ContentRow title="Apple TV Series" items={appletvSeries} isLarge={true} />
+    
         <ContentRow title="Netflix Series" items={netflixSeries} />
-        <ContentRow title="Netflix Movies" items={netflixMovies} />
-        <ContentRow title="Action" items={actionMovies} />
+        <ContentRow title="Netflix Movies" items={netflixMovies}  />
+        <ContentRow title="Action" items={actionMovies} isLarge={true}/>
+        <ContentRow title="Horror" items={horrorMovies} isLarge={true} />
+        <ContentRow title="Adventure" items={adventureMovies} isLarge={true} />
+        <ContentRow title="Romance" items={romanceMovies} isLarge={true} />
       </div>
     </div>
   );
