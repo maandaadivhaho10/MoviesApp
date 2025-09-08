@@ -6,6 +6,8 @@ import Movies from "./pages/Movies";
 import Series from "./pages/Series";
 import MovieDetail from "./pages/MovieDetail";
 import SearchResults from "./components/SearchResults";
+import DetailPage from "./pages/DetailPage";
+import Footer from "./components/Footer";
 
 const App = () => {
   const [showSearch, setShowSearch] = useState(false);
@@ -28,9 +30,12 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/movies" element={<Movies />} />
             <Route path="/series" element={<Series />} />
+            <Route path="/details/:id" element={<DetailPage />} />
             <Route path="/movie/:id" element={<MovieDetail />} />
+            
           </Routes>
         )}
+           <Footer />
       </div>
     </Router>
   );
