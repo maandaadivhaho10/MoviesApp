@@ -1,6 +1,7 @@
 // DetailPage.jsx
 import { useParams } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
+import { Play, Plus, CalendarDays } from 'lucide-react';
 
 const API_KEY = "308f4dafd1dfe3023311c1e5b4356a1b";
 const BASE_URL = "https://api.themoviedb.org/3";

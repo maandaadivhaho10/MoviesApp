@@ -1,20 +1,25 @@
 import { Heart, Send, Gamepad2 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
     <footer className="bg-black text-gray-300 py-6 mt-10 border-t border-gray-700">
       <div className="max-w-6xl mx-auto px-4 flex flex-col space-y-4">
         {/* Logo */}
-        <h1 className="text-2xl font-bold text-blue-400">vidjoy</h1>
+        <h1 className="text-2xl font-bold text-blue-400">StreamHub</h1>
 
         {/* Links with icons */}
         <div className="flex items-center space-x-6 text-sm">
           <a href="#" className="flex items-center space-x-2 hover:text-white">
             <Send size={16} /> <span>Donate to us</span>
           </a>
-          <a href="#" className="flex items-center space-x-2 hover:text-white">
-            <Gamepad2 size={16} /> <span>DMCA</span>
-          </a>
+          <Link
+  to="/dmca"
+  className="flex items-center space-x-2 hover:text-white"
+>
+  <Gamepad2 size={16} /> 
+  <span>DMCA</span>
+</Link>
         </div>
 
        {/* Credits */}

@@ -8,6 +8,8 @@ import MovieDetail from "./pages/MovieDetail";
 import SearchResults from "./components/SearchResults";
 import DetailPage from "./pages/DetailPage";
 import Footer from "./components/Footer";
+import ExplorePage from "./pages/ExplorePage";
+import DMCA from "./pages/DMCA";
 
 const App = () => {
   const [showSearch, setShowSearch] = useState(false);
@@ -32,6 +34,8 @@ const App = () => {
             <Route path="/series" element={<Series />} />
             <Route path="/details/:id" element={<DetailPage />} />
             <Route path="/movie/:id" element={<MovieDetail />} />
+             <Route path="/explore/:title" element={<ExplorePage />} />
+             <Route path="/dmca" element={<DMCA />} />
             
           </Routes>
         )}

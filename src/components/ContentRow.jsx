@@ -19,11 +19,15 @@ const ContentRow = ({ title, items, showExplore = true, isLarge = false }) => {
       {/* Title + Explore */}
       <div className="flex justify-between items-center mb-6 px-8">
         <h2 className="text-xl font-semibold text-white">{title}</h2>
-        {showExplore && (
-          <button className="text-white hover:text-shadow-white transition-colors flex items-center">
-            Explore <span className="ml-1">›</span>
-          </button>
-        )}
+       {showExplore && (
+  <Link
+    to={`/explore/${title}`}
+    state={{ items }} // pass items to explore page
+    className="text-white hover:text-shadow-white transition-colors flex items-center"
+  >
+    Explore <span className="ml-1">›</span>
+  </Link>
+)}
       </div>
 
       {/* Row with arrows */}
