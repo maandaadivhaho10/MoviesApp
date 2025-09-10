@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 // Displays movies for a selected genre + filters
 export default function GenreMoviesView({
@@ -84,7 +85,7 @@ export default function GenreMoviesView({
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4">
             {movies.map((movie) => (
-              <div key={movie.id} className="group cursor-pointer">
+              <Link to={`/details/${movie.id}`} key={movie.id} className="group cursor-pointer">
                 <div className="relative mb-2">
                   <img
                     src={
@@ -105,7 +106,7 @@ export default function GenreMoviesView({
                 <div className="text-xs text-gray-400">
                   {movie.release_date ? new Date(movie.release_date).getFullYear() : 'N/A'}
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}

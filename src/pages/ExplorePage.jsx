@@ -29,14 +29,14 @@ const ExplorePage = () => {
     <div className="min-h-screen bg-black text-white p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">{title}</h2>
+        <h2 className="text-xl sm:text-2xl font-bold">{title}</h2>
         <Link to="/" className="text-blue-400 hover:underline">
           ← Back
         </Link>
       </div>
 
       {/* Grid of items (taller + narrower cards) */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-3 sm:gap-4">
         {paginatedItems.map((item, index) => {
           const image = item.poster_path
             ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
@@ -48,7 +48,8 @@ const ExplorePage = () => {
           const rating = item.vote_average?.toFixed(1);
 
           return (
-            <div
+            <Link
+              to={`/details/${item.id}`}
               key={index}
               className="group cursor-pointer w-36 sm:w-40 md:w-44"
             >
@@ -74,7 +75,7 @@ const ExplorePage = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>

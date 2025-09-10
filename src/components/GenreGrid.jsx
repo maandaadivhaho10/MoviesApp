@@ -11,7 +11,7 @@ export default function GenreGrid({ genres, genreImages, onSelectGenre }) {
           <div
             key={genre.id}
             onClick={() => onSelectGenre(genre)}
-            className="relative w-40 sm:w-48 md:w-56 lg:w-60 h-80 rounded-md overflow-hidden cursor-pointer group hover:transform hover:scale-105 transition-all duration-300 bg-gray-900"
+            className="relative w-36 sm:w-40 md:w-44 lg:w-48 h-96 rounded-md overflow-hidden cursor-pointer group hover:transform hover:scale-105 transition-all duration-300 bg-gray-900"
           >
             <img
               src={
@@ -22,16 +22,22 @@ export default function GenreGrid({ genres, genreImages, onSelectGenre }) {
                   : "/placeholder.png"
               }
               alt={genre.name}
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+              className="w-full h-full object-cover opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"
               onError={(e) => {
-                console.warn("Genre image failed, using placeholder:", genre.name, genreImages[genre.id]);
+                console.warn(
+                  "Genre image failed, using placeholder:",
+                  genre.name,
+                  genreImages[genre.id]
+                );
                 e.currentTarget.onerror = null;
                 e.currentTarget.src = "/placeholder.png";
               }}
             />
 
-            <div className="absolute inset-0 bg-black/10 group-hover:bg-black/5 flex items-center justify-center transition-all duration-300">
-              <h3 className="text-lg md:text-xl font-semibold text-center px-4 drop-shadow-md">{genre.name}</h3>
+            <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 flex items-center justify-center transition-all duration-300">
+              <h3 className="text-lg md:text-xl font-semibold text-center px-4 drop-shadow-md">
+                {genre.name}
+              </h3>
             </div>
             <div className="absolute inset-0 border-2 border-transparent group-hover:border-blue-500 rounded-md transition-all duration-300"></div>
           </div>

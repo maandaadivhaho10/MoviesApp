@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Play, Plus, CalendarDays } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const API_KEY = "308f4dafd1dfe3023311c1e5b4356a1b";
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -7,6 +8,7 @@ const BASE_URL = "https://api.themoviedb.org/3";
 const HeroSection = () => {
   const [featuredContent, setFeaturedContent] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchMovies() {
@@ -80,7 +82,10 @@ const HeroSection = () => {
         
         {/* Action Buttons */}
         <div className="flex items-center space-x-3 md:space-x-4">
-          <button className="flex items-center space-x-2 bg-white text-black px-3 py-2 sm:px-4 sm:py-2 md:px-6 md:py-3 rounded-full hover:bg-gray-200 transition-colors text-sm sm:text-base font-semibold">
+          <button
+            onClick={() => navigate(`/details/${currentContent.id}`)}
+            className="flex items-center space-x-2 bg-white text-black px-3 py-2 sm:px-4 sm:py-2 md:px-6 md:py-3 rounded-full hover:bg-gray-200 transition-colors text-sm sm:text-base font-semibold"
+          >
             <Play className="w-4 h-4 sm:w-5 sm:h-5" />
             <span className="hidden sm:inline">Watch</span>
             <span className="sm:hidden">Play</span>
@@ -97,7 +102,7 @@ const HeroSection = () => {
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 rounded-full transition-colors duration-300 ${
+            className={`w-2 h-2 sm:w-2.5 sm:h-0.5 md:w-3 md:h-3 rounded-full transition-colors duration-300 ${
               index === currentSlide ? "bg-white" : "bg-gray-600 hover:bg-gray-400"
             }`}
           />

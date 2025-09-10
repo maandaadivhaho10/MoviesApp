@@ -1,23 +1,31 @@
-import React, { useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const ContentRow = ({ title, items, showExplore = true, isLarge = false }) => {
-  const scrollRef = useRef(null);
+  const [visibleCount, setVisibleCount] = useState(2);
 
-  const scroll = (direction) => {
-    if (scrollRef.current) {
-      const scrollAmount = 300; // how far it moves per click
-      scrollRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    }
+  // Determine how many cards fit in one row based on Tailwind breakpoints
+  const computeVisible = () => {
+    const w = window.innerWidth;
+    if (w >= 1024) return 6;      // lg
+    if (w >= 768) return 4;       // md
+    if (w >= 640) return 3;       // sm
+    return 2;                     // default
   };
+
+  useEffect(() => {
+    const update = () => setVisibleCount(computeVisible());
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const visibleItems = items.slice(0, visibleCount);
 
   return (
     <div className="mb-12">
       {/* Title + Explore */}
-      <div className="flex justify-between items-center mb-6 px-8">
+      <div className="flex justify-between items-center mb-6 px-4 sm:px-8">
         <h2 className="text-xl font-semibold text-white">{title}</h2>
        {showExplore && (
   <Link
@@ -32,44 +40,29 @@ const ContentRow = ({ title, items, showExplore = true, isLarge = false }) => {
 
       {/* Row with arrows */}
       <div className="relative group">
-        {/* Left arrow */}
-        <button
-          onClick={() => scroll("left")}
-          className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 
-                     bg-black bg-opacity-50 hover:bg-opacity-80 text-white 
-                     p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-        >
-          ‹
-        </button>
+        {/* Arrows removed for grid layout */}
 
-        {/* Content row */}
+        {/* Content grid (no horizontal scroll) */}
         <div
-          ref={scrollRef}
-          className="flex space-x-4 px-8 overflow-hidden scroll-smooth"
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4 px-4 sm:px-8"
         >
-          {items.map((item, index) => {
+          {visibleItems.map((item, index) => {
             const image = item.poster_path
               ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
               : "/placeholder.png"; // keep placeholder.png in /public
             const name = item.title || item.name;
-            const year = (item.release_date || item.first_air_date || "").split(
-              "-"
-            )[0];
+            const year = (item.release_date || item.first_air_date || "").split("-")[0];
             const rating = item.vote_average?.toFixed(1);
 
             return (
               <Link to={`/details/${item.id}`} key={index}>
-                <div
-                  className={`flex-shrink-0 group cursor-pointer ${
-                    isLarge ? "w-80" : "w-64"
-                  }`}
-                >
+                <div className="group cursor-pointer">
                   <div className="relative overflow-hidden rounded-lg">
                     <img
                       src={image}
                       alt={name}
                       className={`w-full object-cover transition-transform duration-300 group-hover:scale-105 ${
-                        isLarge ? "h-48" : "h-36"
+                        isLarge ? "h-48" : "h-40"
                       }`}
                     />
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
