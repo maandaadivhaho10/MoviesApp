@@ -102,7 +102,7 @@ const HeroSection = () => {
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-2 h-2 sm:w-2.5 sm:h-0.5 md:w-3 md:h-3 rounded-full transition-colors duration-300 ${
+            className={`w-1.5 h-1.5 sm:w-2 sm:h-2 md:w-2.5 md:h-2.5 rounded-full transition-colors duration-300 ${
               index === currentSlide ? "bg-white" : "bg-gray-600 hover:bg-gray-400"
             }`}
           />

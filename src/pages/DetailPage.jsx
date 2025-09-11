@@ -1,6 +1,7 @@
 // DetailPage.jsx
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
+import { Play, Plus } from "lucide-react";
 
 const API_KEY = "308f4dafd1dfe3023311c1e5b4356a1b";
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -113,17 +114,23 @@ const DetailPage = () => {
               <p className="mt-3 text-gray-200 max-w-3xl">
                 {data.overview || "No overview available."}
               </p>
-              <p className="mt-2 text-gray-300">
-                ⭐ {data.vote_average?.toFixed(1) ?? "N/A"} •{" "}
-                {(data.release_date || data.first_air_date || "").slice(0, 4)}
+              <p className="mt-2 text-gray-300 flex items-center gap-1">
+                <span className="text-white">★</span>
+                <span className="text-white">{data.vote_average?.toFixed(1) ?? "N/A"}</span>
+                <span>• {(data.release_date || data.first_air_date || "").slice(0, 4)}</span>
               </p>
 
               <div className="mt-6 flex gap-3">
-                <button onClick={handleWatch} className="px-5 py-2 bg-white text-black rounded-lg font-medium">
-                  ▶ Watch
+                <button
+                  onClick={handleWatch}
+                  className="flex items-center space-x-2 bg-white text-black px-3 py-2 sm:px-4 sm:py-2 md:px-6 md:py-3 rounded-full hover:bg-gray-200 transition-colors text-sm sm:text-base font-semibold"
+                >
+                  <Play className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <span className="hidden sm:inline">Watch</span>
+                  <span className="sm:hidden">Play</span>
                 </button>
-                <button className="px-5 py-2 bg-white/10 hover:bg-white/20 rounded-lg font-medium">
-                  + My List
+                <button className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 border-2 border-white rounded-full hover:bg-white/20 transition-colors">
+                  <Plus className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </button>
               </div>
             </div>
@@ -194,26 +201,28 @@ const DetailPage = () => {
 
       {/* Cast */}
       <section className="px-4 sm:px-6 md:px-12 py-8">
-        <h2 className="text-2xl font-semibold mb-4">Cast</h2>
-        <div className="flex space-x-6 overflow-x-auto pb-2 scrollbar-blue">
-          {(data.credits?.cast || []).slice(0, 12).map((actor) => (
-            <div key={actor.id} className="w-24 sm:w-28 md:w-32 text-center">
-              <img
-                src={
-                  actor.profile_path
-                    ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
-                    : "/placeholder.png"
-                }
-                alt={actor.name}
-                className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-cover rounded-full mb-2"
-                loading="lazy"
-              />
-              <p className="text-xs sm:text-sm font-medium truncate">{actor.name}</p>
-              <p className="text-[10px] sm:text-xs text-gray-400 truncate">{actor.character}</p>
-            </div>
-          ))}
+  <h2 className="text-2xl font-semibold mb-4">Cast</h2>
+  <div className="flex space-x-6 overflow-x-auto pb-2 scrollbar-blue">
+    {(data.credits?.cast || []).slice(0, 12).map((actor) => (
+      <Link key={actor.id} to={`/person/${actor.id}`}>
+        <div className="w-24 sm:w-28 md:w-32 text-center">
+          <img
+            src={
+              actor.profile_path
+                ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
+                : "/placeholder.png"
+            }
+            alt={actor.name}
+            className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-cover rounded-full mb-2"
+            loading="lazy"
+          />
+          <p className="text-xs sm:text-sm font-medium truncate">{actor.name}</p>
+          <p className="text-[10px] sm:text-xs text-gray-400 truncate">{actor.character}</p>
         </div>
-      </section>
+      </Link>
+    ))}
+  </div>
+</section>
 
       {/* Overlay Player Modal */}
       {showPlayer && playerKey && (

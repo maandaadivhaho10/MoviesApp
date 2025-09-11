@@ -12,6 +12,7 @@ import ExplorePage from "./pages/ExplorePage";
 import DMCA from "./pages/DMCA";
 import GenreDetailPage from "./pages/GenreDetailPage";
 import ExploreGenres from "./components/ExploreGenres";
+import PersonPage from "./pages/PersonPage";
 
 const App = () => {
   const [showSearch, setShowSearch] = useState(false);
@@ -40,7 +41,7 @@ const App = () => {
              <Route path="/dmca" element={<DMCA />} />
              <Route path="/genre/:genreId" element={<GenreDetailPage />} />
              <Route path="/explore-genres" element={<ExploreGenres />} />
-            
+              <Route path="/person/:personId" element={<PersonPage />} />
           </Routes>
         )}
            <Footer />

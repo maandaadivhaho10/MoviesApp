@@ -69,7 +69,7 @@ const ExplorePage = () => {
                   <div className="flex justify-between items-center text-sm text-gray-300">
                     <span>{year || "N/A"}</span>
                     <div className="flex items-center">
-                      <span className="text-yellow-400 mr-1">★</span>
+                      <span className="text-white-400 mr-1">★</span>
                       <span>{rating || "N/A"}</span>
                     </div>
                   </div>
