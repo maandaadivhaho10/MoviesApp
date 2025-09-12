@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import Movies from "./pages/Movies";
 import Series from "./pages/Series";
@@ -21,6 +22,7 @@ const App = () => {
   return (
     <Router>
       <div className="bg-black min-h-screen">
+        <ScrollToTop />
         <Navbar
           showSearch={showSearch}
           setShowSearch={setShowSearch}

@@ -107,12 +107,20 @@ const Navbar = ({ showSearch, setShowSearch, searchQuery, setSearchQuery }) => {
               />
             )}
           </div>
+
+          {/* Mobile APP & Download on responsive */}
+          <div className="flex items-center space-x-2">
+            <span className="text-xs">APP</span>
+            <Download className="w-4 h-4" />
+          </div>
           
-          {/* Mobile Menu Button */}
-          <Menu
-            className="w-6 h-6 cursor-pointer hover:text-blue-500"
-            onClick={toggleMobileMenu}
-          />
+          {/* Mobile Menu Button hidden per request */}
+          <div className="hidden">
+            <Menu
+              className="w-6 h-6 cursor-pointer hover:text-blue-500"
+              onClick={toggleMobileMenu}
+            />
+          </div>
         </div>
 
         {/* Tablet Search (md screens only) */}
@@ -143,58 +151,25 @@ const Navbar = ({ showSearch, setShowSearch, searchQuery, setSearchQuery }) => {
               />
             )}
           </div>
-          <Download className="w-5 h-5 cursor-pointer hover:text-blue-500" />
-          <Menu
-            className="w-6 h-6 cursor-pointer hover:text-blue-500"
-            onClick={toggleMobileMenu}
-          />
+          {/* Tablet APP & Download on responsive */}
+          <div className="flex items-center space-x-2">
+            <span className="text-sm">APP</span>
+            <Download className="w-5 h-5 cursor-pointer hover:text-blue-500" />
+          </div>
+          {/* Tablet Menu Button hidden per request */}
+          <div className="hidden">
+            <Menu
+              className="w-6 h-6 cursor-pointer hover:text-blue-500"
+              onClick={toggleMobileMenu}
+            />
+          </div>
         </div>
       </div>
 
       {/* Mobile Menu Overlay */}
-      {isMobileMenuOpen && (
+      {false && (
         <div className="lg:hidden bg-black bg-opacity-95 backdrop-blur-md border-t border-gray-800">
-          <div className="px-4 py-4 space-y-4">
-            {/* Mobile Navigation Links */}
-            <div className="flex flex-col space-y-4 text-white">
-              <a
-                href="/"
-                className="hover:text-blue-500 transition-colors text-lg py-2"
-                onClick={closeMobileMenu}
-              >
-                Home
-              </a>
-              <a
-                href="/movies"
-                className="hover:text-blue-500 transition-colors text-lg py-2"
-                onClick={closeMobileMenu}
-              >
-                Movies
-              </a>
-              <a
-                href="/series"
-                className="hover:text-blue-500 transition-colors text-lg py-2"
-                onClick={closeMobileMenu}
-              >
-                TV Series
-              </a>
-              <a
-                href="#"
-                className="hover:text-blue-500 transition-colors text-lg py-2"
-                onClick={closeMobileMenu}
-              >
-                My List
-              </a>
-            </div>
-
-            {/* Mobile App Download */}
-            <div className="border-t border-gray-700 pt-4">
-              <div className="flex items-center justify-center space-x-2 cursor-pointer hover:text-blue-500 text-white py-2">
-                <span className="text-sm">Download APP</span>
-                <Download className="w-4 h-4" />
-              </div>
-            </div>
-          </div>
+          {/* Mobile menu disabled per request */}
         </div>
       )}
     </nav>

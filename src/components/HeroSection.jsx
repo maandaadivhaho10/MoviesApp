@@ -28,7 +28,7 @@ const HeroSection = () => {
   }, [featuredContent]);
 
   if (featuredContent.length === 0) return (
-    <div className="flex items-center justify-center h-[50vh] md:h-[70vh] text-white pt-20 md:pt-32">
+    <div className="flex items-center justify-center h-[40vh] md:h-[55vh] text-white pt-20 md:pt-28">
       <div className="text-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-4"></div>
         <p className="text-lg">Loading...</p>
@@ -39,7 +39,7 @@ const HeroSection = () => {
   const currentContent = featuredContent[currentSlide];
 
   return (
-    <div className="relative h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[80vh] xl:h-[85vh]">
+    <div className="relative h-[40vh] sm:h-[48vh] md:h-[56vh] lg:h-[64vh] xl:h-[70vh]">
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent z-10"></div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"></div>

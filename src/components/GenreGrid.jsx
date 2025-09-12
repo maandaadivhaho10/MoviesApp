@@ -6,12 +6,12 @@ export default function GenreGrid({ genres, genreImages, onSelectGenre }) {
     <div className="bg-black text-white py-12">
       <h2 className="text-center text-2xl font-bold mb-10">Explore Genres</h2>
 
-      <div className="flex justify-center gap-6 px-6 flex-wrap">
-        {genres.map((genre) => (
+      <div className="flex justify-center gap-8 sm:gap-10 md:gap-12 px-6 flex-wrap">
+        {genres.map((genre, idx) => (
           <div
             key={genre.id}
             onClick={() => onSelectGenre(genre)}
-            className="relative w-36 sm:w-40 md:w-44 lg:w-48 h-96 rounded-md overflow-hidden cursor-pointer group hover:transform hover:scale-105 transition-all duration-300 bg-gray-900"
+            className={`relative w-36 sm:w-40 md:w-44 lg:w-48 h-96 rounded-md overflow-hidden cursor-pointer group hover:transform hover:scale-105 transition-all duration-300 bg-gray-900 ${idx === 1 || idx === 3 ? 'mt-4 sm:mt-6' : ''}`}
           >
             <img
               src={
