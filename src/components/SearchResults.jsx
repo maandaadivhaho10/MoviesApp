@@ -35,8 +35,8 @@ const SearchResults = ({ searchQuery }) => {
                     <span>{year || "N/A"}</span>
                     <span>•</span>
                     <div className="flex items-center">
-                      <span className="text-yellow-500 mr-1">★</span>
-                      <span>{rating || "N/A"}</span>
+                      <span className="text-white mr-1">★</span>
+                      <span className="text-white">{rating || "N/A"}</span>
                     </div>
                   </div>
                 </div>

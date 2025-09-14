@@ -135,6 +135,21 @@ export default function ExploreGenres() {
         onSortChange={handleSortChange}
         onSearch={() => fetchMoviesForGenre(selectedGenre.id)}
         onRemoveGenre={removeGenreFilter}
+        onGenreChange={(genre) => {
+          const id = typeof genre === 'object' && genre !== null ? genre.id : genre;
+          const name = typeof genre === 'object' && genre !== null ? genre.name : undefined;
+          if (!id) {
+            setSelectedGenre(null);
+            setMovies([]);
+            navigate(`/explore-genres`);
+            return;
+          }
+          // Update state immediately for responsive UI
+          setSelectedGenre({ id, name: name ?? (genreData.find(g => g.id === id)?.name || 'Genre') });
+          fetchMoviesForGenre(id);
+          // Keep URL in sync
+          navigate(`/explore-genres?genreId=${id}&name=${encodeURIComponent(name ?? (genreData.find(g => g.id === id)?.name || 'Genre'))}`);
+        }}
       />
     );
   }

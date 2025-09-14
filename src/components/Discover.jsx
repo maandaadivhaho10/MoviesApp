@@ -76,54 +76,84 @@ const Discover = ({ initialCategory = "movie" }) => {
     <div className="bg-black text-white min-h-screen p-6">
       {/* Filters */}
       <div className="sticky top-0 z-20 bg-black/90 py-2 flex flex-wrap gap-2 items-center justify-center mb-4">
-        <select
-          value={selectedGenre || ""}
-          onChange={(e) => setSelectedGenre(e.target.value)}
-          className="bg-gray-800 px-3 py-2 rounded"
-        >
-          <option value="">Genres</option>
-          {genres.map((g) => (
-            <option key={g.id} value={g.id}>
-              {g.name}
-            </option>
-          ))}
-        </select>
+        <div className="relative w-48">
+          <select
+            value={selectedGenre || ""}
+            onChange={(e) => setSelectedGenre(e.target.value)}
+            className="w-full bg-gray-800 h-10 px-3 rounded-full appearance-none pr-10 text-sm"
+          >
+            <option value="">Genres</option>
+            {genres.map((g) => (
+              <option key={g.id} value={g.id}>
+                {g.name}
+              </option>
+            ))}
+          </select>
+          <span className="pointer-events-none absolute inset-y-0 right-2 flex flex-col justify-center">
+            <svg className="w-4 h-4 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fillRule="evenodd" d="M10 6l-4 4h8l-4-4z" clipRule="evenodd" />
+            </svg>
+            <svg className="w-4 h-4 text-white -mt-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fillRule="evenodd" d="M10 14l4-4H6l4 4z" clipRule="evenodd" />
+            </svg>
+          </span>
+        </div>
 
-        <select
-          value={year}
-          onChange={(e) => setYear(e.target.value)}
-          className="bg-gray-800 px-3 py-2 rounded w-32"
-        >
-          <option value="">All Years</option>
-          {Array.from({ length: 2025 - 1900 + 1 }, (_, i) => 2025 - i).map((y) => (
-            <option key={y} value={y}>{y}</option>
-          ))}
-        </select>
+        <div className="relative w-48">
+          <select
+            value={year}
+            onChange={(e) => setYear(e.target.value)}
+            className="w-full bg-gray-800 h-10 px-3 rounded-full appearance-none pr-10 text-sm"
+          >
+            <option value=""> Year</option>
+            {Array.from({ length: 2025 - 1900 + 1 }, (_, i) => 2025 - i).map((y) => (
+              <option key={y} value={y}>{y}</option>
+            ))}
+          </select>
+          <span className="pointer-events-none absolute inset-y-0 right-2 flex flex-col justify-center">
+            <svg className="w-4 h-4 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fillRule="evenodd" d="M10 6l-4 4h8l-4-4z" clipRule="evenodd" />
+            </svg>
+            <svg className="w-4 h-4 text-white -mt-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fillRule="evenodd" d="M10 14l4-4H6l4 4z" clipRule="evenodd" />
+            </svg>
+          </span>
+        </div>
 
-        <select
-          value={sort}
-          onChange={(e) => setSort(e.target.value)}
-          className="bg-gray-800 px-3 py-2 rounded"
-        >
-          {sortOptions.map((o) => (
-            <option key={o.value} value={o.value}>
-              {o.label}
-            </option>
-          ))}
-        </select>
+        <div className="relative w-48">
+          <select
+            value={sort}
+            onChange={(e) => setSort(e.target.value)}
+            className="w-full bg-gray-800 h-10 px-3 rounded-full appearance-none pr-10 text-sm"
+          >
+            {sortOptions.map((o) => (
+              <option key={o.value} value={o.value}>
+                {o.label}
+              </option>
+            ))}
+          </select>
+          <span className="pointer-events-none absolute inset-y-0 right-2 flex flex-col justify-center">
+            <svg className="w-4 h-4 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fillRule="evenodd" d="M10 6l-4 4h8l-4-4z" clipRule="evenodd" />
+            </svg>
+            <svg className="w-4 h-4 text-white -mt-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fillRule="evenodd" d="M10 14l4-4H6l4 4z" clipRule="evenodd" />
+            </svg>
+          </span>
+        </div>
 
         <button
           onClick={fetchResults}
-          className="bg-blue-600 px-4 py-2 rounded"
+          className="w-48 h-10 bg-blue-600 rounded-full text-sm flex items-center justify-center"
         >
           Search
         </button>
       </div>
 
       {/* Results */}
-      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 lg:grid-cols-8 xl:grid-cols-10 gap-1">
+      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-2">
         {paginated.map((item) => (
-          <div key={item.id} className="bg-gray-900 rounded-lg overflow-hidden">
+          <div key={item.id} className="bg-gray-900 rounded-lg overflow-hidden shadow-md">
             <img
               src={
                 item.poster_path
@@ -131,16 +161,18 @@ const Discover = ({ initialCategory = "movie" }) => {
                   : "https://via.placeholder.com/300x450?text=No+Image"
               }
               alt={item.title || item.name}
-              className="w-full h-52 sm:h-56 md:h-48 lg:h-48 object-cover"
+              className="w-full h-60 sm:h-64 md:h-60 lg:h-60 object-cover"
             />
             <div className="p-2">
-              <h3 className="text-xs font-semibold truncate">
+              <h3 className="text-xs sm:text-sm font-semibold truncate">
                 {item.title || item.name}
               </h3>
-              <p className="text-gray-400 text-[10px]">
-                {item.release_date || item.first_air_date || "N/A"}
-              </p>
-              <p className="text-yellow-400 text-xs">⭐ {item.vote_average ? item.vote_average.toFixed(1) : "0.0"}</p>
+              <div className="flex items-center justify-between text-[11px] sm:text-xs">
+                <span className="text-gray-400">
+                  {(item.release_date || item.first_air_date || "N/A").split("-")[0]}
+                </span>
+                <span className="text-white font-medium">★ {item.vote_average ? item.vote_average.toFixed(1) : "0.0"}</span>
+              </div>
             </div>
           </div>
         ))}
