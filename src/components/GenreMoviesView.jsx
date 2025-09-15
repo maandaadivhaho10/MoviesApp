@@ -17,6 +17,7 @@ export default function GenreMoviesView({
   onGenreChange,
 }) {
   const [localGenres, setLocalGenres] = useState([]);
+  const [showCount, setShowCount] = useState(true);
   const FALLBACK_GENRES = [
     { id: 28, name: "Action" },
     { id: 12, name: "Adventure" },
@@ -92,6 +93,11 @@ export default function GenreMoviesView({
     onSearch();
   }, [selectedGenre, onSearch]);
 
+  // When genre changes, re-show the count badge
+  useEffect(() => {
+    setShowCount(true);
+  }, [selectedGenre]);
+
   // Safely derive selected genre name and movies list
   const selectedGenreId = selectedGenre?.id ?? selectedGenre ?? "";
   const selectedGenreIdNum = typeof selectedGenreId === "string" ? Number(selectedGenreId) : selectedGenreId;
@@ -129,13 +135,34 @@ export default function GenreMoviesView({
               const g = effectiveGenres.find((gg) => gg.id === id);
               onGenreChange(id ? { id, name: g?.name ?? "Genre" } : "");
             }}
-            className="w-full bg-gray-800 h-10 px-3 rounded-full appearance-none pr-10 text-sm"
+            className="w-full bg-gray-800 h-10 pl-16 pr-10 rounded-full appearance-none text-sm border border-white focus:outline-none focus:ring-2 focus:ring-white"
           >
             <option value="">Genres</option>
             {effectiveGenres.map((g) => (
               <option key={g.id} value={g.id}>{g.name}</option>
             ))}
           </select>
+          {/* Movies count badge with dismiss (X) to the left of the dropdown */}
+          {showCount && (
+            <span className="absolute inset-y-0 left-2 flex items-center gap-1">
+              <span className="text-xs text-gray-300 bg-gray-700/70 rounded-full px-2 py-0.5">
+                {Array.isArray(safeMovies) ? safeMovies.length : 0}
+              </span>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setShowCount(false);
+                }}
+                className="text-gray-400 hover:text-white text-xs leading-none"
+                aria-label="Hide count"
+                title="Hide count"
+              >
+                ×
+              </button>
+            </span>
+          )}
           <span className="pointer-events-none absolute inset-y-0 right-2 flex flex-col justify-center">
             <svg className="w-4 h-4 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fillRule="evenodd" d="M10 6l-4 4h8l-4-4z" clipRule="evenodd" />
@@ -153,7 +180,7 @@ export default function GenreMoviesView({
             onChange={(e) =>
               onYearChange(e.target.value ? parseInt(e.target.value) : "")
             }
-            className="w-full bg-gray-800 h-10 px-3 rounded-full appearance-none pr-10 text-sm"
+            className="w-full bg-gray-800 h-10 px-3 rounded-full appearance-none pr-10 text-sm border border-white focus:outline-none focus:ring-2 focus:ring-white"
           >
             <option value="">Year</option>
             {Array.from({ length: 2025 - 1900 + 1 }, (_, i) => 2025 - i).map((y) => (
@@ -175,7 +202,7 @@ export default function GenreMoviesView({
           <select
             value={sortBy}
             onChange={(e) => onSortChange(e.target.value)}
-            className="w-full bg-gray-800 h-10 px-3 rounded-full appearance-none pr-10 text-sm"
+            className="w-full bg-gray-800 h-10 px-3 rounded-full appearance-none pr-10 text-sm border border-white focus:outline-none focus:ring-2 focus:ring-white"
           >
             {sortOptions.map((o) => (
               <option key={o.value} value={o.value}>
@@ -230,6 +257,20 @@ export default function GenreMoviesView({
                     alt={movie?.title ?? "Movie"}
                     className="w-full h-auto rounded-lg transition-transform duration-300 group-hover:scale-105"
                   />
+                  {/* Always-visible white circle overlay */}
+                  <span className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                    <span className="w-9 h-9 sm:w-10 sm:h-10 bg-white rounded-full shadow-md flex items-center justify-center">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="w-5 h-5 text-black"
+                        aria-hidden="true"
+                      >
+                        <path d="M8 5v14l11-7L8 5z" />
+                      </svg>
+                    </span>
+                  </span>
                 </div>
                 <div className="text-sm font-medium text-white truncate">
                   {movie?.title ?? "Untitled"}

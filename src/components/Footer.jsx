@@ -10,15 +10,15 @@ export default function Footer() {
 
         {/* Links */}
         <div className="flex flex-wrap items-center gap-4 text-sm">
-          <a href="#" className="flex items-center gap-2 text-gray-300 hover:text-white">
+          <a href="#" className="flex items-center gap-2 text-[#3b82f6]">
             <FaTelegramPlane size={16} /> <span>Donate to us</span>
           </a>
 
-          <a href="#" className="text-gray-300 hover:text-white">
+          <a href="#" className="text-[#3b82f6]">
             <FaDiscord size={18} />
           </a>
 
-          <Link to="/dmca" className="text-gray-300 hover:text-white">
+          <Link to="/dmca" className="text-[#3b82f6]">
             DMCA
           </Link>
         </div>

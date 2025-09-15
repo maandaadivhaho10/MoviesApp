@@ -37,6 +37,9 @@ const HeroSection = () => {
   );
 
   const currentContent = featuredContent[currentSlide];
+  const backgroundUrl = currentContent?.backdrop_path
+    ? `https://image.tmdb.org/t/p/original${currentContent.backdrop_path}`
+    : "https://via.placeholder.com/1920x1080?text=No+Image";
 
   return (
     <div className="relative h-[40vh] sm:h-[48vh] md:h-[56vh] lg:h-[64vh] xl:h-[70vh]">
@@ -44,11 +47,17 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent z-10"></div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"></div>
       
-      {/* Background Image */}
-      <img
-        src={`https://image.tmdb.org/t/p/original${currentContent.backdrop_path}`}
-        alt={currentContent.title}
-        className="w-full h-full object-cover transition-opacity duration-1000"
+      {/* Background Image as CSS for better cover control */}
+      <div
+        className="absolute inset-0 transition-opacity duration-1000"
+        style={{
+          backgroundImage: `url(${backgroundUrl})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+        aria-label={currentContent?.title || "Background"}
+        role="img"
       />
       
       {/* Content */}
@@ -103,8 +112,9 @@ const HeroSection = () => {
             key={index}
             onClick={() => setCurrentSlide(index)}
             className={`w-1.5 h-1.5 sm:w-2 sm:h-2 md:w-2.5 md:h-2.5 rounded-full transition-colors duration-300 ${
-              index === currentSlide ? "bg-white" : "bg-gray-600 hover:bg-gray-400"
+              index === currentSlide ? "bg-white" : "bg-white/40 hover:bg-white/60"
             }`}
+            aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Search, Download, X, Menu } from "lucide-react";
+import { NavLink } from "react-router-dom";
 
 const Navbar = ({ showSearch, setShowSearch, searchQuery, setSearchQuery }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -21,26 +22,42 @@ const Navbar = ({ showSearch, setShowSearch, searchQuery, setSearchQuery }) => {
         </div>
 
         {/* Desktop Navigation */}
-        <ul className="hidden lg:flex space-x-6 xl:space-x-10 text-white">
+        <ul className="hidden lg:flex space-x-6 xl:space-x-10">
           <li>
-            <a href="/" className="hover:text-blue-500 transition-colors">
+            <NavLink
+              to="/"
+              end
+              className={({ isActive }) =>
+                `${isActive ? "text-white" : "text-gray-400"} hover:text-white transition-colors`
+              }
+            >
               Home
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a href="/movies" className="hover:text-blue-500 transition-colors">
+            <NavLink
+              to="/movies"
+              className={({ isActive }) =>
+                `${isActive ? "text-white" : "text-gray-400"} hover:text-white transition-colors`
+              }
+            >
               Movies
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a href="/series" className="hover:text-blue-500 transition-colors">
+            <NavLink
+              to="/series"
+              className={({ isActive }) =>
+                `${isActive ? "text-white" : "text-gray-400"} hover:text-white transition-colors`
+              }
+            >
               TV Series
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a href="#" className="hover:text-blue-500 transition-colors">
+            <span className="text-gray-400 hover:text-white transition-colors">
               My List
-            </a>
+            </span>
           </li>
         </ul>
 

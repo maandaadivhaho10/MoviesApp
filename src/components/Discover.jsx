@@ -14,6 +14,7 @@ const Discover = ({ initialCategory = "movie" }) => {
   const [sort, setSort] = useState("popularity.desc");
   const [results, setResults] = useState([]);
   const [page, setPage] = useState(1);
+  const [showCount, setShowCount] = useState(true);
 
   // Fixed sort options as requested
   const sortOptions = [
@@ -63,6 +64,11 @@ const Discover = ({ initialCategory = "movie" }) => {
     // eslint-disable-next-line
   }, [category, selectedGenre, year, sort]);
 
+  // When genre changes, re-show the count badge
+  useEffect(() => {
+    setShowCount(true);
+  }, [selectedGenre]);
+
   // Pagination helpers
   const totalPages = Math.ceil(results.length / ITEMS_PER_PAGE) || 1;
   const paginated = results.slice(
@@ -80,7 +86,7 @@ const Discover = ({ initialCategory = "movie" }) => {
           <select
             value={selectedGenre || ""}
             onChange={(e) => setSelectedGenre(e.target.value)}
-            className="w-full bg-gray-800 h-10 px-3 rounded-full appearance-none pr-10 text-sm"
+            className="w-full bg-gray-800 h-10 pl-16 pr-10 rounded-full appearance-none text-sm"
           >
             <option value="">Genres</option>
             {genres.map((g) => (
@@ -89,6 +95,27 @@ const Discover = ({ initialCategory = "movie" }) => {
               </option>
             ))}
           </select>
+          {/* Movies count badge with dismiss (X) to the left of the dropdown */}
+          {showCount && (
+            <span className="absolute inset-y-0 left-2 flex items-center gap-1">
+              <span className="text-xs text-gray-300 bg-gray-700/70 rounded-full px-2 py-0.5">
+                {Array.isArray(results) ? results.length : 0}
+              </span>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setShowCount(false);
+                }}
+                className="text-gray-400 hover:text-white text-xs leading-none"
+                aria-label="Hide count"
+                title="Hide count"
+              >
+                ×
+              </button>
+            </span>
+          )}
           <span className="pointer-events-none absolute inset-y-0 right-2 flex flex-col justify-center">
             <svg className="w-4 h-4 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fillRule="evenodd" d="M10 6l-4 4h8l-4-4z" clipRule="evenodd" />
