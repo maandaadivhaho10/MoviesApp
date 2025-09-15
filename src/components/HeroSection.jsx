@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Play, Plus, CalendarDays } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-const API_KEY = "308f4dafd1dfe3023311c1e5b4356a1b";
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 
 const HeroSection = () => {
@@ -63,7 +63,10 @@ const HeroSection = () => {
       {/* Content */}
       <div className="absolute bottom-8 sm:bottom-12 md:bottom-16 lg:bottom-20 left-4 sm:left-6 md:left-8 lg:left-12 right-4 sm:right-6 md:right-8 lg:right-auto z-20 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
         {/* Title */}
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-white font-bold mb-2 md:mb-3 lg:mb-4 leading-tight">
+        <h1
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-white font-bold mb-2 md:mb-3 lg:mb-4 leading-tight break-words line-clamp-2 md:line-clamp-3"
+          title={currentContent.title}
+        >
           {currentContent.title}
         </h1>
         

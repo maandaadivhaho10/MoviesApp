@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const API_KEY = "308f4dafd1dfe3023311c1e5b4356a1b"; // replace with your TMDB key
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY; // from Vite env
 const BASE_URL = "https://api.themoviedb.org/3";
 const ITEMS_PER_PAGE = 12; // how many movies per page
 

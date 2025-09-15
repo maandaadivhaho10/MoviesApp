@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ContentRow from "../components/ContentRow";
 import ExploreGenres from "../components/ExploreGenres";
 import HeroSection from "../components/HeroSection";
-const API_KEY = "308f4dafd1dfe3023311c1e5b4356a1b";
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 
 const Home = () => {
@@ -41,7 +41,7 @@ const Home = () => {
       <ContentRow title="Romance" items={romanceMovies} isLarge />
       <ContentRow title="Apple TV Series" items={appletvSeries} isLarge />
       <ExploreGenres />
-    </div>
+    </div> 
   );
 };
 
